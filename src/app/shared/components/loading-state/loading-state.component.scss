@@ -1,0 +1,22 @@
+.loading-state {
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  color: var(--color-muted);
+}
+
+.loader {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 3px solid var(--color-primary-soft);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

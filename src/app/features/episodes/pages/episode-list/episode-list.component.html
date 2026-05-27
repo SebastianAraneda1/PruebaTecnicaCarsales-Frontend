@@ -1,0 +1,63 @@
+<section class="page-section">
+  <div class="section-heading">
+    <p class="eyebrow">Episodios</p>
+    <h2>Explora los episodios de Rick and Morty</h2>
+  </div>
+
+  <form class="filters" (ngSubmit)="search()">
+    <label>
+      Nombre
+      <input
+        type="search"
+        name="name"
+        placeholder="Ej: Pilot"
+        [ngModel]="nameFilter()"
+        (ngModelChange)="nameFilter.set($event)"
+      />
+    </label>
+
+    <label>
+      Código
+      <input
+        type="search"
+        name="episode"
+        placeholder="Ej: S01E01"
+        [ngModel]="episodeFilter()"
+        (ngModelChange)="episodeFilter.set($event)"
+      />
+    </label>
+
+    <div class="filter-actions">
+      <button type="submit">Buscar</button>
+      <button type="button" class="secondary" (click)="clearFilters()">
+        Limpiar
+      </button>
+    </div>
+  </form>
+
+  @if (isLoading()) {
+    <app-loading-state />
+  } @else if (errorMessage()) {
+    <app-error-message [message]="errorMessage()!" />
+  } @else if (hasResults()) {
+    <div class="episode-grid">
+      @for (episode of episodes(); track episode.id) {
+        <article class="episode-card">
+          <span>{{ episode.episode }}</span>
+          <h3>{{ episode.name }}</h3>
+          <p>Fecha de estreno: {{ episode.airDate }}</p>
+        </article>
+      }
+    </div>
+
+    <app-pagination
+      [currentPage]="currentPage()"
+      [totalPages]="totalPages()"
+      [hasNextPage]="hasNextPage()"
+      [hasPreviousPage]="hasPreviousPage()"
+      (pageChange)="changePage($event)"
+    />
+  } @else {
+    <p class="empty-state">No se encontraron episodios.</p>
+  }
+</section>

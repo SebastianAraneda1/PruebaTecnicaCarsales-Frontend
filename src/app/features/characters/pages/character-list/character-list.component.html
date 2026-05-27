@@ -1,0 +1,107 @@
+<section class="page-section">
+  <div class="section-heading">
+    <p class="eyebrow">Personajes</p>
+    <h2>Busca personajes por nombre, estado, especie o género</h2>
+  </div>
+
+  <form class="filters" (ngSubmit)="search()">
+    <label>
+      Nombre
+      <input
+        type="search"
+        name="name"
+        placeholder="Ej: Rick"
+        [ngModel]="nameFilter()"
+        (ngModelChange)="nameFilter.set($event)"
+      />
+    </label>
+
+    <label>
+      Estado
+      <select
+        name="status"
+        [ngModel]="statusFilter()"
+        (ngModelChange)="statusFilter.set($event)"
+      >
+        <option value="">Todos</option>
+        <option value="alive">Vivo</option>
+        <option value="dead">Muerto</option>
+        <option value="unknown">Desconocido</option>
+      </select>
+    </label>
+
+    <label>
+      Especie
+      <input
+        type="search"
+        name="species"
+        placeholder="Ej: Human"
+        [ngModel]="speciesFilter()"
+        (ngModelChange)="speciesFilter.set($event)"
+      />
+    </label>
+
+    <label>
+      Género
+      <select
+        name="gender"
+        [ngModel]="genderFilter()"
+        (ngModelChange)="genderFilter.set($event)"
+      >
+        <option value="">Todos</option>
+        <option value="female">Femenino</option>
+        <option value="male">Masculino</option>
+        <option value="genderless">Sin género</option>
+        <option value="unknown">Desconocido</option>
+      </select>
+    </label>
+
+    <div class="filter-actions">
+      <button type="submit">Buscar</button>
+      <button type="button" class="secondary" (click)="clearFilters()">
+        Limpiar
+      </button>
+    </div>
+  </form>
+
+  @if (isLoading()) {
+    <app-loading-state />
+  } @else if (errorMessage()) {
+    <app-error-message [message]="errorMessage()!" />
+  } @else if (hasResults()) {
+    <div class="character-grid">
+      @for (character of characters(); track character.id) {
+        <article class="character-card">
+          <img
+            [src]="character.image"
+            [alt]="'Imagen de ' + character.name"
+            loading="lazy"
+          />
+
+          <div class="character-content">
+            <span
+              class="status"
+              [class.dead]="character.status === 'Dead'"
+              [class.unknown]="character.status === 'unknown'"
+            >
+              {{ character.status }}
+            </span>
+            <h3>{{ character.name }}</h3>
+            <p>{{ character.species }}</p>
+            <small>{{ character.gender }}</small>
+          </div>
+        </article>
+      }
+    </div>
+
+    <app-pagination
+      [currentPage]="currentPage()"
+      [totalPages]="totalPages()"
+      [hasNextPage]="hasNextPage()"
+      [hasPreviousPage]="hasPreviousPage()"
+      (pageChange)="changePage($event)"
+    />
+  } @else {
+    <p class="empty-state">No se encontraron personajes.</p>
+  }
+</section>
