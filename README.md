@@ -61,43 +61,40 @@ La aplicación incluye:
 - Diseño responsive.
 - Componentes reutilizables.
 
----
-
 ## Estructura general del proyecto
 
+```txt
 src/
-|
-├── app/
-│   ├── core/
-│   │   ├── models/
-│   │   └── services/
-│   │
-│   ├── features/
-│   │   ├── episodes/
-│   │   │   ├── pages/
-│   │   │   └── services/
-│   │   │
-│   │   └── characters/
-│   │       ├── pages/
-│   │       └── services/
-│   │
-│   ├── shared/
-│   │   ├── components/
-│   │   └── utils/
-│   │
-│   ├── app.component.html
-│   ├── app.component.scss
-│   ├── app.component.ts
-│   ├── app.config.ts
-│   └── app.routes.ts
-│
-├── environments/
-│   ├── environment.ts
-│   └── environment.development.ts
-│
-└── styles.scss
+  app/
+    core/
+      models/
+      services/
 
----
+    features/
+      episodes/
+        pages/
+        services/
+
+      characters/
+        pages/
+        services/
+
+    shared/
+      components/
+      utils/
+
+    app.component.html
+    app.component.scss
+    app.component.ts
+    app.config.ts
+    app.routes.ts
+
+  environments/
+    environment.ts
+    environment.development.ts
+
+  styles.scss
+```
 
 ## Organización por carpetas
 
